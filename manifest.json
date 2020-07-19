@@ -1,0 +1,15 @@
+{
+    "required_api_version": "^2.0.0",
+    "name": "Copy/paste",
+    "description": "Register and use pastes",
+    "developer_name": "hucario",
+    "icon": "icon.png",
+    "preferences": [
+        {
+            "id": "kw",
+            "type": "keyword",
+            "name": "Copy/paste",
+            "default_value": "cp"
+        }
+    ]
+}
