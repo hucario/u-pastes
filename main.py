@@ -50,8 +50,9 @@ class KeywordQueryEventListener(EventListener):
 									name='Type in paste name...',
 									on_enter=DoNothingAction())
 			])
+		search_terms = search_term.split(' ')
+		search_terms.pop(0)
 		if search_term.split(' ')[0] == 'create':
-			search_terms = search_term.split(' ').pop(0)
 			if not search_terms[0] or not search_terms[1]:
 				return RenderResultListAction([
 					ExtensionResultItem(icon=extension_icon,
