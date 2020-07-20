@@ -19,7 +19,7 @@ class PasteExtension(Extension):
 		self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
 	def registerPaste(self,name,value):
-		f = open(db_path, "w")
+		f = open(db_path, "w+")
 		f.write(
 			',{\n'
 			+ '"name":"'
@@ -32,14 +32,21 @@ class PasteExtension(Extension):
 
 	def getPastes(self, searchvalue):
 		temp = []
-		with open(db_path, "rb") as f:
-			db = eval(f.read().decode("utf-8"), dict(true=True, false=False, null=None), {})
-			for row in db:
-				if len(temp) >= 9:
-					break
-				if searchvalue in row.get("value"):
-					temp.append(row)
-			return temp
+		try:
+			with open(db_path, "rb") as f:
+				db = eval(f.read().decode("utf-8"), dict(true=True, false=False, null=None), {})
+				for row in db:
+					if len(temp) >= 9:
+						break
+					if searchvalue in row.get("value"):
+						temp.append(row)
+				return temp
+		except FileNotFoundError:
+			return RenderResultListAction([
+				ExtensionResultItem(icon=extension_icon,
+									name='No pastes found. Add a paste with "cp create <name of paste> <value of paste>"',
+									on_enter=DoNothingAction())
+			])
 
 
 class KeywordQueryEventListener(EventListener):
