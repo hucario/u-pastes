@@ -42,11 +42,7 @@ class PasteExtension(Extension):
 						temp.append(row)
 				return temp
 		except FileNotFoundError:
-			return RenderResultListAction([
-				ExtensionResultItem(icon=extension_icon,
-									name='No pastes found. Add a paste with "cp create <name of paste> <value of paste>"',
-									on_enter=DoNothingAction())
-			])
+			raise Exception("error 404 gamer not found")
 
 
 class KeywordQueryEventListener(EventListener):
@@ -81,12 +77,18 @@ class KeywordQueryEventListener(EventListener):
 
 		items = []
 		search_terms.pop(0)
-		for row in pe.getPastes(''.join(search_terms)):
-			if len(items) < 8:
-				items.append(ExtensionResultItem(icon=extension_icon,
-												 name=row['name'].capitalize(),
-												 on_enter=CopyToClipboardAction(row['value'])))
-
+		try:
+			for row in pe.getPastes(''.join(search_terms)):
+				if len(items) < 8:
+					items.append(ExtensionResultItem(icon=extension_icon,
+													 name=row['name'].capitalize(),
+													 on_enter=CopyToClipboardAction(row['value'])))
+		except:
+			return RenderResultListAction([
+				ExtensionResultItem(icon=extension_icon,
+									name='No pastes found. Add a paste with "cp create <name of paste> <value of paste>"',
+									on_enter=DoNothingAction())
+			])
 		return RenderResultListAction(items)
 
 pe = None
