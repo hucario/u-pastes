@@ -40,6 +40,11 @@ class PasteExtension(Extension):
 						break
 					if searchvalue in row.get("value"):
 						temp.append(row)
+					else:
+						temp.append({
+							name: "gamer",
+							value: row.get("value")
+						})
 				if len(temp) == 0:
 					raise Exception("no gamers with that name HERE")
 				return temp
