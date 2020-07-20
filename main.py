@@ -40,6 +40,8 @@ class PasteExtension(Extension):
 						break
 					if searchvalue in row.get("value"):
 						temp.append(row)
+				if len(temp) == 0:
+					raise Exception("no gamers with that name HERE")
 				return temp
 		except FileNotFoundError:
 			raise Exception("error 404 gamer not found")
@@ -89,7 +91,7 @@ class KeywordQueryEventListener(EventListener):
 									name='No pastes found.',
 									on_enter=DoNothingAction()),
 				ExtensionResultItem(icon=extension_icon,
-									name='Add a paste with "cp create <name of paste> <value of paste>"',
+									name='Add a paste with "cp create <name> <value>"',
 									on_enter=DoNothingAction())
 			])
 		return RenderResultListAction(items)
