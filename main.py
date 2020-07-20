@@ -86,7 +86,10 @@ class KeywordQueryEventListener(EventListener):
 		except:
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
-									name='No pastes found. Add a paste with "cp create <name of paste> <value of paste>"',
+									name='No pastes found.',
+									on_enter=DoNothingAction()),
+				ExtensionResultItem(icon=extension_icon,
+									name='Add a paste with "cp create <name of paste> <value of paste>"',
 									on_enter=DoNothingAction())
 			])
 		return RenderResultListAction(items)
