@@ -42,6 +42,7 @@ class PasteExtension(Extension):
 						temp.append(row)
 				if len(temp) == 0:
 					raise Exception("no gamers with that name HERE")
+				print(str(temp))
 				return temp
 		except FileNotFoundError:
 			raise Exception("error 404 gamer not found")
@@ -60,7 +61,7 @@ class KeywordQueryEventListener(EventListener):
 			])
 		search_terms = event.get_argument().replace('%', '').split(' ')
 		print(search_terms)
-		print(''.join(search_terms))
+		print(' '.join(search_terms))
 		if search_term.split(' ')[0] == 'create':
 			search_terms.pop(0)
 			if not search_terms[0] or not search_terms[1]:
@@ -82,7 +83,7 @@ class KeywordQueryEventListener(EventListener):
 		items = []
 		search_terms.pop(0)
 		try:
-			for row in pe.getPastes(''.join(search_terms)):
+			for row in pe.getPastes(' '.join(search_terms)):
 				if len(items) < 8:
 					items.append(ExtensionResultItem(icon=extension_icon,
 													 name="Copy paste: "+row['name'].capitalize(),
@@ -90,7 +91,7 @@ class KeywordQueryEventListener(EventListener):
 		except:
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
-									name='No pastes found with name '+ ''.join(search_terms),
+									name='No pastes found with name "'+ ' '.join(search_terms)+ '"',
 									on_enter=DoNothingAction()),
 				ExtensionResultItem(icon=extension_icon,
 									name='Add a paste with "cp create <name> <value>"',
