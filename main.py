@@ -60,7 +60,6 @@ class KeywordQueryEventListener(EventListener):
 									on_enter=DoNothingAction())
 			])
 		search_terms = event.get_argument().replace('%', '').split(' ')
-		search_terms.insert(0,'dummy')
 		print(search_terms)
 		print(' '.join(search_terms))
 		if search_term.split(' ')[0] == 'create':
