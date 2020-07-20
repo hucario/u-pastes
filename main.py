@@ -83,7 +83,7 @@ class KeywordQueryEventListener(EventListener):
 			for row in pe.getPastes(''.join(search_terms)):
 				if len(items) < 8:
 					items.append(ExtensionResultItem(icon=extension_icon,
-													 name=row['name'].capitalize(),
+													 name="Copy paste: "+row['name'].capitalize(),
 													 on_enter=CopyToClipboardAction(row['value'])))
 		except:
 			return RenderResultListAction([
