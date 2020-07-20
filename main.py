@@ -60,9 +60,10 @@ class KeywordQueryEventListener(EventListener):
 									on_enter=DoNothingAction())
 			])
 		search_terms = event.get_argument().replace('%', '').split(' ')
+		search_term = ' '.join(search_terms)
 		print(search_terms)
 		print(' '.join(search_terms))
-		if search_term.split(' ')[0] == 'create':
+		if search_terms[0] == 'create':
 			if not search_terms[0] or not search_terms[1]:
 				return RenderResultListAction([
 					ExtensionResultItem(icon=extension_icon,
