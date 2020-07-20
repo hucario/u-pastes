@@ -73,7 +73,7 @@ class KeywordQueryEventListener(EventListener):
 			b = search_terms.pop(0)
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
-									name="Create paste \"" + b + "\" with value \"".join(x for x in search_terms)+"\"",
+									name="Create paste \"" + b + "\" with value \"" + ''.join(x for x in search_terms)+"\"",
 									on_enter=pe.registerPaste(b,"".join(x for x in search_terms)))
 			])
 
@@ -88,7 +88,7 @@ class KeywordQueryEventListener(EventListener):
 		except:
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
-									name='No pastes found with name '.join(search_terms),
+									name='No pastes found with name '+ ''.join(search_terms),
 									on_enter=DoNothingAction()),
 				ExtensionResultItem(icon=extension_icon,
 									name='Add a paste with "cp create <name> <value>"',
