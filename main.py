@@ -64,7 +64,7 @@ class KeywordQueryEventListener(EventListener):
 		print(search_terms)
 		print(' '.join(search_terms))
 		if search_terms[0] == 'create':
-			if not search_terms[0] or not search_terms[1]:
+			if not search_terms[1] and not search_terms[2]:
 				return RenderResultListAction([
 					ExtensionResultItem(icon=extension_icon,
 										name='Type in new paste name and value',
@@ -73,11 +73,10 @@ class KeywordQueryEventListener(EventListener):
 										name='Format: [prefix] create <name of new paste> <value of new paste>',
 										on_enter=DoNothingAction())
 				])
-			b = search_terms.pop(0)
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
-									name="Create paste \"" + b + "\" with value \"" + ''.join(x for x in search_terms)+"\"",
-									on_enter=pe.registerPaste(b,"".join(x for x in search_terms)))
+									name="Create paste \"" + search_terms[1] + "\" with value \"" + ' '.join(x for x in search_terms[2:])+"\"",
+									on_enter=pe.registerPaste(search_terms[1]," ".join(x for x in search_terms[2:])))
 			])
 
 		items = []
