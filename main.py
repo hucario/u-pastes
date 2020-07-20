@@ -17,26 +17,29 @@ class PasteExtension(Extension):
 	def __init__(self):
 		super(PasteExtension, self).__init__()
 		self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
-		self.allowed_skin_tones = ["", "dark", "light", "medium", "medium-dark", "medium-light"]
 
 	def registerPaste(self,name,value):
 		f = open(db_path, "w")
 		f.write(
-			'[{\n'
+			',{\n'
 			+ '"name":"'
 			+ name + ',\n'
 			+ '"value":"'
 			+ value + '"\n'
-			+ '}]'
+			+ '}'
 		)
 		f.close()
 
 	def getPastes(self, searchvalue):
 		temp = []
-		f = ast.literal_eval(db_path)
-		for row in f:
-			if len(temp) < 9 and (searchvalue in row.value):
-				temp.append(f)
+		with open(db_path, "rb") as f:
+			db = eval(f.read().decode("utf-8"), dict(true=True, false=False, null=None), {})
+			for row in db:
+				if len(temp) >= 9:
+					break
+				if searchvalue in row.get("value"):
+					temp.append(row)
+			return temp
 
 
 class KeywordQueryEventListener(EventListener):
