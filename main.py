@@ -42,7 +42,6 @@ class PasteExtension(Extension):
 						temp.append(row)
 				if len(temp) == 0:
 					raise Exception("no gamers with that name HERE")
-				print(str(temp))
 				return temp
 		except FileNotFoundError:
 			raise Exception("error 404 gamer not found")
@@ -64,15 +63,25 @@ class KeywordQueryEventListener(EventListener):
 		print(search_terms)
 		print(' '.join(search_terms))
 		if search_terms[0] == 'create':
-			if not search_terms[1] and not search_terms[2]:
+			try:
+				if not search_terms[1] and not search_terms[2]:
+					return RenderResultListAction([
+						ExtensionResultItem(icon=extension_icon,
+											name='Type in new paste name and value',
+											on_enter=DoNothingAction()),
+						ExtensionResultItem(
+											name='Format: [prefix] create <name of new paste> <value of new paste>',
+											on_enter=DoNothingAction())
+					])
+			except: 
 				return RenderResultListAction([
-					ExtensionResultItem(icon=extension_icon,
-										name='Type in new paste name and value',
-										on_enter=DoNothingAction()),
-					ExtensionResultItem(
-										name='Format: [prefix] create <name of new paste> <value of new paste>',
-										on_enter=DoNothingAction())
-				])
+						ExtensionResultItem(icon=extension_icon,
+											name='Type in new paste name and value',
+											on_enter=DoNothingAction()),
+						ExtensionResultItem(
+											name='Format: [prefix] create <name of new paste> <value of new paste>',
+											on_enter=DoNothingAction())
+					])
 			return RenderResultListAction([
 				ExtensionResultItem(icon=extension_icon,
 									name="Create paste \"" + search_terms[1] + "\" with value \"" + ' '.join(x for x in search_terms[2:])+"\"",
