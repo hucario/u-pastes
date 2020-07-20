@@ -64,7 +64,6 @@ class KeywordQueryEventListener(EventListener):
 		print(search_terms)
 		print(' '.join(search_terms))
 		if search_term.split(' ')[0] == 'create':
-			search_terms.pop(0)
 			if not search_terms[0] or not search_terms[1]:
 				return RenderResultListAction([
 					ExtensionResultItem(icon=extension_icon,
@@ -82,7 +81,6 @@ class KeywordQueryEventListener(EventListener):
 			])
 
 		items = []
-		search_terms.pop(0)
 		try:
 			for row in pe.getPastes(' '.join(search_terms)):
 				if len(items) < 8:
