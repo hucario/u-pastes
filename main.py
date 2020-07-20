@@ -35,6 +35,14 @@ class PasteExtension(Extension):
 		try:
 			with open(db_path, "rb") as f:
 				db = eval(f.read().decode("utf-8"), dict(true=True, false=False, null=None), {})
+				db = [
+					{
+						"name": "lenny",
+						"value": "( ͡° ͜ʖ ͡°)"
+					}
+				] #debug
+
+				
 				for row in db:
 					if len(temp) >= 9:
 						break
